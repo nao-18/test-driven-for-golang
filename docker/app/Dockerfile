@@ -1,6 +1,6 @@
 FROM golang:1.16-alpine
 
-WORKDIR /go/src/github.com/nao-18/golang-test
+WORKDIR /go/src/github.com/nao-18/test-driven-for-golang
 COPY ./src .
 
 # RUN mkdir /usr/local/go/src/tmp
@@ -17,7 +17,7 @@ RUN go get -u github.com/cosmtrek/air && \
   # go get -u github.com/onsi/gomega && \
   go build -o /go/bin/air github.com/cosmtrek/air
 
-RUN touch $HOME/.ack-ginkgo-rc
+# RUN touch $HOME/.ack-ginkgo-rc
 # RUN echo "ACK_GINKGO_RC=true" >> .ack-ginkgo-rc
 
 CMD ["air", "-c", ".air.toml"]
