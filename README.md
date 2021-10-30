@@ -21,6 +21,11 @@ docker-compose up -d
 docker-compose run --rm app go test
 ~~~
 
+## カレントディレクトリ以下の全てのテストを再帰的に実行する
+~~~bash
+docker-compose run --rm app go test ./... -v
+~~~
+
 ## shortオプション付きテスト
 ~~~bash
 docker-compose run --rm app go test -short
