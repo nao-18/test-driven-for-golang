@@ -3,8 +3,9 @@ package maps
 type Dictionary map[string]string
 
 var (
-	ErrNotFound   = DictionaryErr("could not find the word you were looking for")
-	ErrWordExists = DictionaryErr("cannot add word because it already exist")
+	ErrNotFound         = DictionaryErr("could not find the word you were looking for")
+	ErrWordExists       = DictionaryErr("cannot add word because it already exist")
+	ErrWordDoesNotExist = DictionaryErr("cannot update word because it does not exist")
 )
 
 type DictionaryErr string
