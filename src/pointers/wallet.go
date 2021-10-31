@@ -20,3 +20,7 @@ func (w *Wallet) Deposit(amount Bitconin) {
 func (w *Wallet) Balance() Bitconin {
 	return w.balance
 }
+
+func (w *Wallet) Withdraw(amount Bitconin) {
+	w.balance -= amount
+}
