@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"net/http"
 
 	"github.com/nao-18/test-driven-for-golang/di"
 )
@@ -35,5 +35,5 @@ func greetingPrefix(language string) (prefix string) {
 
 func main() {
 	fmt.Println(Hello("world", ""))
-	di.Greet(os.Stdout, "Elodie")
+	http.ListenAndServe(":9000", http.HandlerFunc(di.MyGreeterHandler))
 }
