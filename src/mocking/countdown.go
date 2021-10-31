@@ -1,0 +1,3 @@
+package mocking
+
+func Countdown() {}
