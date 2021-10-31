@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"github.com/nao-18/test-driven-for-golang/di"
+)
 
 const spanish = "Spanish"
 const french = "French"
@@ -30,4 +35,5 @@ func greetingPrefix(language string) (prefix string) {
 
 func main() {
 	fmt.Println(Hello("world", ""))
+	di.Greet(os.Stdout, "Elodie")
 }
