@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/nao-18/test-driven-for-golang/di"
+	"github.com/nao-18/test-driven-for-golang/mocking"
 )
 
 const spanish = "Spanish"
@@ -35,5 +37,6 @@ func greetingPrefix(language string) (prefix string) {
 
 func main() {
 	fmt.Println(Hello("world", ""))
+	mocking.Countdown(os.Stdout)
 	http.ListenAndServe(":9000", http.HandlerFunc(di.MyGreeterHandler))
 }
