@@ -20,19 +20,19 @@ func (s *SpySleeper) Sleep() {
 
 type DefaultSleeper struct{}
 
-func (d *DefaultSleeper) Sleepe() {
+func (d *DefaultSleeper) Sleep() {
 	time.Sleep(1 * time.Second)
 }
 
 const finalWord = "Go!"
 const constdownStart = 3
 
-func Countdown(out io.Writer) {
+func Countdown(out io.Writer, sleeper Sleeper) {
 	for i := constdownStart; i > 0; i-- {
-		time.Sleep(1 * time.Second)
+		sleeper.Sleep()
 		fmt.Fprintln(out, i)
 	}
 
-	time.Sleep(1 * time.Second)
+	sleeper.Sleep()
 	fmt.Fprint(out, finalWord)
 }
