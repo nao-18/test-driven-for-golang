@@ -37,6 +37,7 @@ func greetingPrefix(language string) (prefix string) {
 
 func main() {
 	fmt.Println(Hello("world", ""))
-	mocking.Countdown(os.Stdout)
+	sleeper := &mocking.DefaultSleeper{}
+	mocking.Countdown(os.Stdout, sleeper)
 	http.ListenAndServe(":9000", http.HandlerFunc(di.MyGreeterHandler))
 }
