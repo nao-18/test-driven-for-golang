@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/nao-18/test-driven-for-golang/di"
+)
 
 const spanish = "Spanish"
 const french = "French"
@@ -30,4 +35,5 @@ func greetingPrefix(language string) (prefix string) {
 
 func main() {
 	fmt.Println(Hello("world", ""))
+	http.ListenAndServe(":9000", http.HandlerFunc(di.MyGreeterHandler))
 }
