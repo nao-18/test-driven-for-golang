@@ -5,15 +5,13 @@ import (
 	"time"
 )
 
-func Racer(a, b string) (winner string) {
-	aDuration := measureResponseTime(a)
-	bDuration := measureResponseTime(b)
-
-	if aDuration < bDuration {
-		return a
+func Racer(a, b string) (winner string, error error) {
+	select {
+	case <-ping(a):
+		return a, nil
+	case <-ping(b):
+		return b, nil
 	}
-
-	return b
 }
 
 func measureResponseTime(url string) time.Duration {
