@@ -51,7 +51,7 @@ func TestWalk(t *testing.T) {
 				"Chris",
 				Profile{33, "London"},
 			},
-			[]string{"Chris", "londpn"},
+			[]string{"Chris", "London"},
 		},
 	}
 
@@ -66,24 +66,5 @@ func TestWalk(t *testing.T) {
 				t.Errorf("got %v, want %v", got, test.ExpectedCalls)
 			}
 		})
-	}
-
-	expected := "Chris"
-	var got []string
-
-	x := struct {
-		Name string
-	}{expected}
-
-	walk(x, func(input string) {
-		got = append(got, input)
-	})
-
-	if len(got) != 1 {
-		t.Errorf("wrong number of function calls, got %d want %d", len(got), 1)
-	}
-
-	if got[0] != expected {
-		t.Errorf("got %q, want %q", got[0], expected)
 	}
 }
