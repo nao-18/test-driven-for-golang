@@ -18,6 +18,25 @@ func (s *StubStore) Fetch() string {
 
 func TestHandler(t *testing.T) {
 	data := "hello, world"
+
+	t.Run("returns data from store", func(t *testing.T) {
+		store := &SpyStore{response: data}
+		svr := Server(store)
+
+		request := httptest.NewRequest(http.MethodGet, "/", nil)
+		response := httptest.NewRecorder()
+
+		svr.ServeHTTP(response, request)
+
+		if response.Body.String() != data {
+			t.Errorf(`got "%s", want "%s"`, response.Body.String(), data)
+		}
+
+		if store.cancelled {
+			t.Errorf("it should not have cancelled the store")
+		}
+	})
+
 	t.Run("tells store to cancel work if request is cancelled", func(t *testing.T) {
 		store := &SpyStore{response: data}
 		svr := Server(store)
