@@ -98,3 +98,7 @@ func TestConvertingToArabic(t *testing.T) {
 		})
 	}
 }
+
+func ConvertToArabic(roman string) int {
+	return 0
+}
