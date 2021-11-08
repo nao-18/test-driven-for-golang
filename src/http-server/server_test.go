@@ -7,14 +7,29 @@ import (
 	"testing"
 )
 
-func TestGETPlayers(t *testing.T) {
-	server := &PlayerServer{}
+type StubPlayerStore struct {
+	stores map[string]int
+}
 
-	t.Run("return s Pepper's score", func(t *testing.T) {
+func (s *StubPlayerStore) GetPlayerScore(name string) int {
+	score := s.stores[name]
+	return score
+}
+
+func TestGETPlayers(t *testing.T) {
+	store := StubPlayerStore{
+		map[string]int{
+			"Pepper": 20,
+			"Floyd":  10,
+		},
+	}
+	server := &PlayerServer{&store}
+
+	t.Run("returns Pepper's score", func(t *testing.T) {
 		request := newGetScoreRequest("Pepper")
 		response := httptest.NewRecorder()
 
-		server.ServerHTTP(response, request)
+		server.ServeHTTP(response, request)
 
 		assertResponseBody(t, response.Body.String(), "20")
 	})
@@ -23,7 +38,7 @@ func TestGETPlayers(t *testing.T) {
 		request := newGetScoreRequest("Floyd")
 		response := httptest.NewRecorder()
 
-		server.ServerHTTP(response, request)
+		server.ServeHTTP(response, request)
 
 		assertResponseBody(t, response.Body.String(), "10")
 	})

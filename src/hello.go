@@ -33,6 +33,12 @@ func greetingPrefix(language string) (prefix string) {
 	return
 }
 
+type InMemoryPlayerStore struct{}
+
+func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
+	return 123
+}
+
 func main() {
 	// fmt.Println(Hello("world", ""))
 	// sleeper := &mocking.DefaultSleeper{}
@@ -40,8 +46,8 @@ func main() {
 	// http.ListenAndServe(":9000", http.HandlerFunc(di.MyGreeterHandler))
 
 	// http-server
-	handler := http.HandlerFunc(server.PlayerServer)
-	if err := http.ListenAndServe(":9000", handler); err != nil {
+	server := &server.PlayerServer{&InMemoryPlayerStore{}}
+	if err := http.ListenAndServe(":9000", server); err != nil {
 		log.Fatalf("could not listen on port 9000 %v", err)
 	}
 }
