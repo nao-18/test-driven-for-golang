@@ -1,22 +1,43 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"net/http"
+	"os"
+
+	"github.com/nao-18/test-driven-for-golang/di"
+	"github.com/nao-18/test-driven-for-golang/mocking"
 )
 
-// InMemoryPlayerStore collects data about players in memory.
-type InMemoryPlayerStore struct{}
+const spanish = "Spanish"
+const french = "French"
+const englishHelloPrefix = "Hello, "
+const spanishHelloPrefix = "Hola, "
+const frenchHelloPrefix = "Bonjour, "
 
-// GetPlayerScore retrieves scores for a given player.
-func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
-	return 123
+func Hello(name string, language string) string {
+	if name == "" {
+		name = "World"
+	}
+
+	return greetingPrefix(language) + name
+}
+
+func greetingPrefix(language string) (prefix string) {
+	switch language {
+	case french:
+		prefix = frenchHelloPrefix
+	case spanish:
+		prefix = spanishHelloPrefix
+	default:
+		prefix = englishHelloPrefix
+	}
+	return
 }
 
 func main() {
-	server := &PlayerServer{&InMemoryPlayerStore{}}
-
-	if err := http.ListenAndServe(":5000", server); err != nil {
-		log.Fatalf("could not listen on port 5000 %v", err)
-	}
+	fmt.Println(Hello("world", ""))
+	sleeper := &mocking.DefaultSleeper{}
+	mocking.Countdown(os.Stdout, sleeper)
+	http.ListenAndServe(":9000", http.HandlerFunc(di.MyGreeterHandler))
 }
